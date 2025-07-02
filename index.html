@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>민석의 홈페이지</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+  <!-- 로그인 화면 -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-card">
+      <h1>🏠 민석의 홈페이지</h1>
+      <p>개인 생산성 대시보드에 오신 것을 환영합니다!</p>
+      <div class="login-form">
+        <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요" />
+        <button class="login-btn" onclick="login()">로그인</button>
+        <div id="loginError" class="error-message" style="display: none;"></div>
+      </div>
+      <p style="font-size: 12px; opacity: 0.6; margin-top: 1rem;">
+        힌트: 비밀번호는 "minseok123" 입니다
+      </p>
+    </div>
+  </div>
+
+  <!-- 메인 앱 -->
+  <div id="mainApp" class="app-container">
+    <header>
+      <div class="header-content">
+        <div class="logo">민석의 홈페이지</div>
+        <nav class="nav-menu">
+          <button class="nav-btn active" onclick="showSection('dashboard')">대시보드</button>
+          <button class="nav-btn" onclick="showSection('todo')">할 일</button>
+          <button class="nav-btn" onclick="showSection('calendar')">캘린더</button>
+          <button class="nav-btn" onclick="showSection('notes')">노트</button>
+          <button class="nav-btn" onclick="showSection('projects')">프로젝트</button>
+          <button class="nav-btn" onclick="showSection('blog')">일기</button>
+          <button class="nav-btn" onclick="showSection('portfolio')">포트폴리오</button>
+        </nav>
+        <div class="header-controls">
+          <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+          <button class="logout-btn" onclick="logout()">로그아웃</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="welcome-message">
+        <h2>안녕하세요, 민석님! 👋</h2>
+        <p>오늘도 생산적인 하루 보내세요!</p>
+      </div>
+
+      <!-- 대시보드 섹션 -->
+      <section id="dashboard" class="active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="totalTodos">0</div>
+            <div class="stat-label">전체 할 일</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="completedTodos">0</div>
+            <div class="stat-label">완료된 할 일</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalEvents">0</div>
+            <div class="stat-label">이번 달 일정</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalNotes">0</div>
+            <div class="stat-label">작성한 노트</div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <h3>주간 생산성 차트</h3>
+          <div class="chart-bar" id="productivityChart"></div>
+        </div>
+      </section>
+
+      <!-- 할 일 섹션 -->
+      <section id="todo">
+        <div class="card">
+          <h3>새 할 일 추가</h3>
+          <form id="todoForm">
+            <div class="form-group">
+              <label>할 일</label>
+              <input type="text" id="todoText" class="form-control" placeholder="할 일을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label>우선순위</label>
+              <select id="todoPriority" class="form-control">
+                <option value="high">높음</option>
+                <option value="medium">보통</option>
+                <option value="low">낮음</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>마감일</label>
+              <input type="date" id="todoDate" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>카테고리</label>
+              <select id="todoCategory" class="form-control category-select">
+                <option value="work">업무</option>
+                <option value="personal">개인</option>
+                <option value="study">공부</option>
+                <option value="health">건강</option>
+                <option value="other">기타</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">추가하기</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>할 일 목록</h3>
+          <div id="todoList"></div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn btn-success" onclick="exportTodos()">Excel로 내보내기</button>
+        </div>
+      </section>
+
+      <!-- 캘린더 섹션 -->
+      <section id="calendar">
+        <div class="card">
+          <h3>새 일정 추가</h3>
+          <form id="eventForm">
+            <div class="form-group">
+              <label>일정 제목</label>
+              <input type="text" id="eventTitle" class="form-control" placeholder="일정 제목을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label>날짜</label>
+              <input type="date" id="eventDate" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label>시간</label>
+              <input type="time" id="eventTime" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>카테고리</label>
+              <select id="eventCategory" class="form-control category-select">
+                <option value="work">업무</option>
+                <option value="personal">개인</option>
+                <option value="study">공부</option>
+                <option value="health">건강</option>
+                <option value="other">기타</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">일정 추가</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3 id="calendarTitle">2025년 7월</h3>
+          <div class="calendar-header">
+            <div class="calendar-day-header">일</div>
+            <div class="calendar-day-header">월</div>
+            <div class="calendar-day-header">화</div>
+            <div class="calendar-day-header">수</div>
+            <div class="calendar-day-header">목</div>
+            <div class="calendar-day-header">금</div>
+            <div class="calendar-day-header">토</div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn btn-success" onclick="exportCalendar()">Excel로 내보내기</button>
+        </div>
+      </section>
+
+      <!-- 노트 섹션 -->
+      <section id="notes">
+        <div class="card">
+          <h3>새 노트 작성</h3>
+          <form id="noteForm">
+            <div class="form-group">
+              <label>제목</label>
+              <input type="text" id="noteTitle" class="form-control" placeholder="노트 제목을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label>카테고리</label>
+              <select id="noteCategory" class="form-control category-select">
+                <option value="work">업무</option>
+                <option value="personal">개인</option>
+                <option value="study">공부</option>
+                <option value="ideas">아이디어</option>
+                <option value="other">기타</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>내용</label>
+              <textarea id="noteContent" class="form-control" rows="5" placeholder="노트 내용을 입력하세요" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>노트 목록</h3>
+          <div class="form-group">
+            <input type="text" id="noteSearch" class="form-control" placeholder="노트 검색..." />
+          </div>
+          <div id="noteList"></div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn btn-success" onclick="exportNotes()">Excel로 내보내기</button>
+        </div>
+      </section>
+
+      <!-- 프로젝트 섹션 -->
+      <section id="projects">
+        <div class="card">
+          <h3>새 프로젝트 추가</h3>
+          <form id="projectForm">
+            <div class="form-group">
+              <label>프로젝트명</label>
+              <input type="text" id="projectName" class="form-control" placeholder="프로젝트명을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label>설명</label>
+              <textarea id="projectDesc" class="form-control" rows="3" placeholder="프로젝트 설명을 입력하세요"></textarea>
+            </div>
+            <div class="form-group">
+              <label>진행률 (%)</label>
+              <input type="number" id="projectProgress" class="form-control" min="0" max="100" value="0" />
+            </div>
+            <button type="submit" class="btn btn-primary">추가하기</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>프로젝트 목록</h3>
+          <div id="projectList"></div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn btn-success" onclick="exportProjects()">Excel로 내보내기</button>
+        </div>
+      </section>
+
+      <!-- 일기 섹션 -->
+      <section id="blog">
+        <div class="card">
+          <h3>새 일기 작성</h3>
+          <form id="blogForm">
+            <div class="form-group">
+              <label>제목</label>
+              <input type="text" id="blogTitle" class="form-control" placeholder="일기 제목을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label>내용</label>
+              <textarea id="blogContent" class="form-control" rows="5" placeholder="오늘 있었던 일을 적어보세요" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>일기 목록</h3>
+          <div id="blogList"></div>
+        </div>
+
+        <div class="export-controls">
+          <button class="btn btn-success" onclick="exportBlog()">Excel로 내보내기</button>
+        </div>
+      </section>
+
+      <!-- 포트폴리오 섹션 -->
+      <section id="portfolio">
+        <div class="card">
+          <h3>포트폴리오</h3>
+          <div id="portfolioContent">
+            <div class="form-group">
+              <label>이름</label>
+              <input type="text" id="portfolioName" class="form-control" value="민석" />
+            </div>
+            <div class="form-group">
+              <label>직책</label>
+              <input type="text" id="portfolioTitle" class="form-control" value="생산성 전문가" />
+            </div>
+            <div class="form-group">
+              <label>이메일</label>
+              <input type="email" id="portfolioEmail" class="form-control" value="minseok@email.com" />
+            </div>
+            <div class="form-group">
+              <label>기술 스택</label>
+              <input type="text" id="portfolioSkills" class="form-control" value="JavaScript, HTML, CSS, React" />
+            </div>
+            <div class="form-group">
+              <label>자기소개</label>
+              <textarea id="portfolioBio" class="form-control" rows="4">효율적인 업무 처리와 체계적인 목표 관리를 통해 생산성을 극대화하는 것을 목표로 하고 있습니다.</textarea>
+            </div>
+            <button class="btn btn-primary" onclick="savePortfolio()">저장하기</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 모바일 네비게이션 -->
+    <nav class="mobile-nav">
+      <div class="mobile-nav-grid">
+        <button class="mobile-nav-btn active" onclick="showSection('dashboard')">대시보드</button>
+        <button class="mobile-nav-btn" onclick="showSection('todo')">할 일</button>
+        <button class="mobile-nav-btn" onclick="showSection('calendar')">캘린더</button>
+        <button class="mobile-nav-btn" onclick="showSection('notes')">노트</button>
+      </div>
+    </nav>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
