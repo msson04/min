@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>민석의 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 로그인 페이지 -->
+    <div id="login-page" class="page active">
+        <div class="container">
+            <div class="login-container">
+                <div class="card">
+                    <div class="card__body">
+                        <h1>민석의 홈페이지</h1>
+                        <p class="login-subtitle">로그인이 필요합니다</p>
+                        
+                        <form id="login-form" class="login-form">
+                            <div class="form-group">
+                                <label for="password" class="form-label">비밀번호</label>
+                                <input type="password" id="password" class="form-control" placeholder="비밀번호를 입력하세요" required>
+                            </div>
+                            
+                            <div id="login-error" class="error-message" style="display: none;"></div>
+                            <div id="lockout-message" class="lockout-message" style="display: none;"></div>
+                            
+                            <button type="submit" class="btn btn--primary btn--full-width">로그인</button>
+                        </form>
+                        
+                        <div class="login-attempts">
+                            <span id="attempts-info">로그인 시도 횟수: <span id="attempts-count">0</span>/5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 애플리케이션 -->
+    <div id="main-app" class="page">
+        <!-- 네비게이션 -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-content">
+                    <div class="navbar-brand">
+                        <h2>민석의 홈페이지</h2>
+                    </div>
+                    <ul class="navbar-nav">
+                        <li><a href="#" class="nav-link" data-page="home">홈</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">소개</a></li>
+                        <li><a href="#" class="nav-link" data-page="projects">프로젝트</a></li>
+                        <li><a href="#" class="nav-link" data-page="contact">연락처</a></li>
+                        <li><a href="#" class="nav-link" data-page="settings">설정</a></li>
+                    </ul>
+                    <button id="logout-btn" class="btn btn--outline btn--sm">로그아웃</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 홈 페이지 -->
+        <div id="home-page" class="content-page active">
+            <div class="container">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1>안녕하세요, 민석입니다!</h1>
+                        <p class="hero-subtitle">사용자 중심의 웹 애플리케이션을 개발하는 것을 좋아하는 개발자입니다.</p>
+                        <div class="hero-actions">
+                            <button class="btn btn--primary nav-link" data-page="projects">프로젝트 보기</button>
+                            <button class="btn btn--outline nav-link" data-page="contact">연락하기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>주요 기술</h2>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <h3>JavaScript</h3>
+                            <p>모던 자바스크립트 및 ES6+</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>React</h3>
+                            <p>컴포넌트 기반 UI 개발</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>Node.js</h3>
+                            <p>서버사이드 JavaScript</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>HTML/CSS</h3>
+                            <p>반응형 웹 디자인</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 소개 페이지 -->
+        <div id="about-page" class="content-page">
+            <div class="container">
+                <div class="about-content">
+                    <h1>소개</h1>
+                    <div class="profile-section">
+                        <div class="profile-info">
+                            <h2>민석</h2>
+                            <p class="profile-title">웹 개발자</p>
+                            <p class="profile-location">서울, 대한민국</p>
+                            <p class="profile-bio">사용자 중심의 웹 애플리케이션을 개발하는 것을 좋아하는 개발자입니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-section">
+                        <h3>기술 스택</h3>
+                        <div class="skills-tags">
+                            <span class="status status--success">JavaScript</span>
+                            <span class="status status--success">React</span>
+                            <span class="status status--success">Node.js</span>
+                            <span class="status status--success">Python</span>
+                            <span class="status status--success">HTML/CSS</span>
+                            <span class="status status--success">Git</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 프로젝트 페이지 -->
+        <div id="projects-page" class="content-page">
+            <div class="container">
+                <h1>프로젝트</h1>
+                <div class="projects-grid">
+                    <div class="card project-card">
+                        <div class="card__body">
+                            <h3>포트폴리오 웹사이트</h3>
+                            <p>React를 사용한 반응형 포트폴리오 제작</p>
+                            <div class="project-tech">
+                                <span class="status status--info">React</span>
+                                <span class="status status--info">CSS3</span>
+                                <span class="status status--info">JavaScript</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status status--success">완료</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card project-card">
+                        <div class="card__body">
+                            <h3>로그인 시스템</h3>
+                            <p>보안이 강화된 사용자 인증 시스템</p>
+                            <div class="project-tech">
+                                <span class="status status--info">HTML</span>
+                                <span class="status status--info">CSS</span>
+                                <span class="status status--info">JavaScript</span>
+                                <span class="status status--info">LocalStorage</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status status--warning">진행중</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card project-card">
+                        <div class="card__body">
+                            <h3>생산성 앱</h3>
+                            <p>개인 업무 관리를 위한 웹 애플리케이션</p>
+                            <div class="project-tech">
+                                <span class="status status--info">Vanilla JS</span>
+                                <span class="status status--info">HTML5</span>
+                                <span class="status status--info">CSS3</span>
+                            </div>
+                            <div class="project-status">
+                                <span class="status status--success">완료</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 연락처 페이지 -->
+        <div id="contact-page" class="content-page">
+            <div class="container">
+                <h1>연락처</h1>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>연락 정보</h3>
+                                <div class="contact-item">
+                                    <strong>이메일:</strong>
+                                    <a href="mailto:minseok@example.com" target="_blank">minseok@example.com</a>
+                                </div>
+                                <div class="contact-item">
+                                    <strong>전화번호:</strong>
+                                    <a href="tel:010-1234-5678">010-1234-5678</a>
+                                </div>
+                                <div class="contact-item">
+                                    <strong>위치:</strong>
+                                    <span>서울, 대한민국</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-section">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>메시지 보내기</h3>
+                                <form id="contact-form">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">이름</label>
+                                        <input type="text" id="name" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">이메일</label>
+                                        <input type="email" id="email" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message" class="form-label">메시지</label>
+                                        <textarea id="message" class="form-control" rows="5" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn--primary">메시지 전송</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 설정 페이지 -->
+        <div id="settings-page" class="content-page">
+            <div class="container">
+                <h1>설정</h1>
+                <div class="settings-content">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>비밀번호 변경</h3>
+                            <form id="change-password-form">
+                                <div class="form-group">
+                                    <label for="current-password" class="form-label">현재 비밀번호</label>
+                                    <input type="password" id="current-password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password" class="form-label">새 비밀번호</label>
+                                    <input type="password" id="new-password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password" class="form-label">새 비밀번호 확인</label>
+                                    <input type="password" id="confirm-password" class="form-control" required>
+                                </div>
+                                <div id="password-error" class="error-message" style="display: none;"></div>
+                                <div id="password-success" class="success-message" style="display: none;"></div>
+                                <button type="submit" class="btn btn--primary">비밀번호 변경</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
